@@ -27,6 +27,7 @@ export const useStockStore = defineStore('stocks', () => {
     company: undefined,
     brokerage: undefined,
     action: undefined,
+    rating: undefined,
     limit: 50,
     offset: 0,
   });
@@ -37,6 +38,7 @@ export const useStockStore = defineStore('stocks', () => {
   const currentPage = computed(() => Math.floor(meta.value.offset / meta.value.limit) + 1);
   const hasNextPage = computed(() => meta.value.offset + meta.value.limit < meta.value.total);
   const hasPreviousPage = computed(() => meta.value.offset > 0);
+  const pageSize = computed(() => filters.value.limit || 50);
 
   // Actions
   
@@ -115,6 +117,7 @@ export const useStockStore = defineStore('stocks', () => {
       company: undefined,
       brokerage: undefined,
       action: undefined,
+      rating: undefined,
       limit: 50,
       offset: 0,
     };
@@ -162,6 +165,22 @@ export const useStockStore = defineStore('stocks', () => {
   };
 
   /**
+   * Sort stocks client-side
+   */
+  const sortStocks = (field: 'ticker' | 'company' | 'brokerage', direction: 'asc' | 'desc') => {
+    stocks.value.sort((a, b) => {
+      const aVal = (a[field] || '').toString().toLowerCase();
+      const bVal = (b[field] || '').toString().toLowerCase();
+      
+      if (direction === 'asc') {
+        return aVal.localeCompare(bVal);
+      } else {
+        return bVal.localeCompare(aVal);
+      }
+    });
+  };
+
+  /**
    * Refresh stocks with current filters
    */
   const refresh = async () => {
@@ -182,6 +201,7 @@ export const useStockStore = defineStore('stocks', () => {
       company: undefined,
       brokerage: undefined,
       action: undefined,
+      rating: undefined,
       limit: 50,
       offset: 0,
     };
@@ -202,6 +222,7 @@ export const useStockStore = defineStore('stocks', () => {
     currentPage,
     hasNextPage,
     hasPreviousPage,
+    pageSize,
     
     // Actions
     fetchStocks,
@@ -212,6 +233,7 @@ export const useStockStore = defineStore('stocks', () => {
     previousPage,
     goToPage,
     setPageSize,
+    sortStocks,
     refresh,
     reset,
   };

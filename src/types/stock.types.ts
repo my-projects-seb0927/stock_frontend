@@ -10,6 +10,7 @@ export interface Stock {
   company: string;
   brokerage: string;
   action: string;
+  rating_to?: string; // Rating value (Overweight, Buy, Hold, etc.)
   price?: number;
   target_price?: number;
   date?: string;
@@ -26,6 +27,7 @@ export interface StockFilters {
   company?: string;
   brokerage?: string;
   action?: string;
+  rating_to?: string;
 }
 
 export interface StockSort {

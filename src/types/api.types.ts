@@ -30,6 +30,7 @@ export interface StockQueryParams {
   company?: string;
   brokerage?: string;
   action?: string;
+  rating?: string;
   limit?: number;
   offset?: number;
 }

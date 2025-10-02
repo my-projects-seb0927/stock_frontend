@@ -82,21 +82,21 @@ const goBack = () => {
 
             <!-- Action & Additional Info -->
             <div>
-              <h2 class="text-lg font-semibold text-gray-900 mb-4">Action Details</h2>
+              <h2 class="text-lg font-semibold text-gray-900 mb-4">Rating Details</h2>
               <dl class="space-y-3">
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Action</dt>
+                  <dt class="text-sm font-medium text-gray-500">Rating</dt>
                   <dd class="mt-1">
                     <span 
                       class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full"
                       :class="{
-                        'bg-green-100 text-green-800': stockStore.currentStock.action?.toLowerCase().includes('raised') || stockStore.currentStock.action?.toLowerCase().includes('initiated') || stockStore.currentStock.action?.toLowerCase().includes('upgraded'),
-                        'bg-red-100 text-red-800': stockStore.currentStock.action?.toLowerCase().includes('lowered') || stockStore.currentStock.action?.toLowerCase().includes('downgraded'),
-                        'bg-blue-100 text-blue-800': stockStore.currentStock.action?.toLowerCase().includes('reiterated') || stockStore.currentStock.action?.toLowerCase().includes('set'),
-                        'bg-gray-100 text-gray-800': !stockStore.currentStock.action
+                        'bg-green-100 text-green-800': stockStore.currentStock.rating_to && ['overweight', 'buy', 'outperform', 'strong-buy', 'market outperform'].includes(stockStore.currentStock.rating_to.toLowerCase()),
+                        'bg-blue-100 text-blue-800': stockStore.currentStock.rating_to && ['hold', 'neutral', 'in-line', 'market perform', 'equal weight'].includes(stockStore.currentStock.rating_to.toLowerCase()),
+                        'bg-red-100 text-red-800': stockStore.currentStock.rating_to && ['underweight', 'underperform'].includes(stockStore.currentStock.rating_to.toLowerCase()),
+                        'bg-gray-100 text-gray-800': !stockStore.currentStock.rating_to
                       }"
                     >
-                      {{ stockStore.currentStock.action }}
+                      {{ stockStore.currentStock.rating_to || 'N/A' }}
                     </span>
                   </dd>
                 </div>
