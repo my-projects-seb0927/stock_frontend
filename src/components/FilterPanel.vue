@@ -97,13 +97,13 @@ const hasActiveFilters = () => {
           <option value="Outperform">Outperform</option>
           <option value="Hold">Hold</option>
           <option value="Neutral">Neutral</option>
-          <option value="In-line">In-line</option>
+          <option value="In-Line">In-Line</option>
           <option value="Underweight">Underweight</option>
           <option value="Underperform">Underperform</option>
           <option value="Market Outperform">Market Outperform</option>
           <option value="Market Perform">Market Perform</option>
-          <option value="Strong-buy">Strong-buy</option>
-          <option value="Equal weight">Equal weight</option>
+          <option value="Strong-Buy">Strong-Buy</option>
+          <option value="Equal Weight">Equal Weight</option>
         </select>
       </div>
     </div>
