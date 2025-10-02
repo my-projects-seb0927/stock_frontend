@@ -1,30 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useStockStore } from '@/stores';
-import { SearchBar, FilterPanel, Pagination } from '@/components';
+import { FilterPanel, Pagination } from '@/components';
 import type { StockQueryParams } from '@/types';
 
 const stockStore = useStockStore();
 
-const searchQuery = ref('');
 const sortField = ref<'ticker' | 'company' | 'brokerage' | null>(null);
 const sortDirection = ref<'asc' | 'desc'>('asc');
 
 onMounted(() => {
   stockStore.fetchStocks();
 });
-
-const handleSearch = async () => {
-  const filters: StockQueryParams = {};
-  
-  if (searchQuery.value.trim()) {
-    filters.ticker = searchQuery.value.trim();
-    filters.company = searchQuery.value.trim();
-  }
-  
-  stockStore.setFilters(filters);
-  await stockStore.fetchStocks();
-};
 
 const handleFilterApply = async (filters: StockQueryParams) => {
   stockStore.setFilters(filters);
@@ -33,7 +20,6 @@ const handleFilterApply = async (filters: StockQueryParams) => {
 
 const handleFilterClear = async () => {
   stockStore.setFilters({});
-  searchQuery.value = '';
   await stockStore.fetchStocks();
 };
 
@@ -49,7 +35,7 @@ const handleSort = (field: 'ticker' | 'company' | 'brokerage') => {
 };
 
 const getSortIcon = (field: string) => {
-  if (sortField.value !== field) return '↕️';
+  if (sortField.value !== field) return '';
   return sortDirection.value === 'asc' ? '↑' : '↓';
 };
 
@@ -66,15 +52,6 @@ const handlePageSizeChange = async (size: number) => {
   <div class="min-h-screen bg-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Stock Analysis Dashboard</h1>
-
-      <!-- Search Bar -->
-      <div class="mb-6">
-        <SearchBar
-          v-model="searchQuery"
-          placeholder="Search by ticker or company name..."
-          @search="handleSearch"
-        />
-      </div>
 
       <!-- Filter Panel -->
       <FilterPanel
