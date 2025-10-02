@@ -75,7 +75,8 @@ const goBack = () => {
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Brokerage</dt>
-                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.brokerage }}</dd>
+                  <dd v-if="stockStore.currentStock.brokerage" class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.brokerage }}</dd>
+                  <dd v-else class="mt-1 text-sm text-gray-400 italic">No brokerage available</dd>
                 </div>
               </dl>
             </div>

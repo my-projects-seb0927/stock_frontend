@@ -117,7 +117,8 @@ const handlePageSizeChange = async (size: number) => {
                   <div class="text-sm text-gray-900">{{ stock.company }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500">{{ stock.brokerage }}</div>
+                  <div v-if="stock.brokerage" class="text-sm text-gray-500">{{ stock.brokerage }}</div>
+                  <div v-else class="text-sm text-gray-400 italic">No brokerage available</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span 
