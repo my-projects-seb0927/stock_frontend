@@ -1,26 +1,20 @@
 /**
- * Stock entity types
- * Note: The swagger doesn't define the exact Stock schema,
- * so we'll create a flexible structure based on common stock data
+ * Stock entity types based on actual API response
  */
 
 export interface Stock {
-  id: number | string; // Support both number and string for large IDs
+  id: string;
   ticker: string;
+  target_from: string;
+  target_to: string;
   company: string;
-  brokerage: string;
   action: string;
-  rating_to?: string; // Rating value (Overweight, Buy, Hold, etc.)
-  price?: number;
-  target_price?: number;
-  date?: string;
-  updated_at?: string;
-  created_at?: string;
-  // Additional fields can be added based on actual API response
-  [key: string]: any;
+  brokerage: string;
+  rating_from: string;
+  rating_to: string;
+  time: string;
+  created_at: string;
 }
-
-export type StockAction = 'buy' | 'sell' | 'hold' | string;
 
 export interface StockFilters {
   ticker?: string;

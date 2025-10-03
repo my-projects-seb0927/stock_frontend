@@ -59,34 +59,49 @@ const goBack = () => {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Basic Info -->
             <div>
-              <h2 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
+              <h2 class="text-lg font-semibold text-gray-900 mb-4">Stock Information</h2>
               <dl class="space-y-3">
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Stock ID</dt>
-                  <dd class="mt-1 text-sm text-gray-900 font-mono">{{ stockStore.currentStock.id }}</dd>
+                  <dt class="text-sm font-medium text-gray-500">Ticker Symbol</dt>
+                  <dd class="mt-1 text-sm text-gray-900 font-bold">{{ stockStore.currentStock.ticker || 'N/A' }}</dd>
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Company</dt>
-                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.company }}</dd>
-                </div>
-                <div>
-                  <dt class="text-sm font-medium text-gray-500">Ticker Symbol</dt>
-                  <dd class="mt-1 text-sm text-gray-900 font-bold">{{ stockStore.currentStock.ticker }}</dd>
+                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.company || 'N/A' }}</dd>
                 </div>
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Brokerage</dt>
-                  <dd v-if="stockStore.currentStock.brokerage" class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.brokerage }}</dd>
-                  <dd v-else class="mt-1 text-sm text-gray-400 italic">No brokerage available</dd>
+                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.brokerage || 'N/A' }}</dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Action</dt>
+                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.action || 'N/A' }}</dd>
                 </div>
               </dl>
             </div>
 
-            <!-- Action & Additional Info -->
+            <!-- Ratings & Targets -->
             <div>
-              <h2 class="text-lg font-semibold text-gray-900 mb-4">Rating Details</h2>
+              <h2 class="text-lg font-semibold text-gray-900 mb-4">Ratings & Targets</h2>
               <dl class="space-y-3">
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Rating</dt>
+                  <dt class="text-sm font-medium text-gray-500">Rating From</dt>
+                  <dd class="mt-1">
+                    <span 
+                      class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full"
+                      :class="{
+                        'bg-green-100 text-green-800': stockStore.currentStock.rating_from && ['overweight', 'buy', 'outperform', 'strong-buy', 'market outperform'].includes(stockStore.currentStock.rating_from.toLowerCase()),
+                        'bg-blue-100 text-blue-800': stockStore.currentStock.rating_from && ['hold', 'neutral', 'in-line', 'market perform', 'equal weight'].includes(stockStore.currentStock.rating_from.toLowerCase()),
+                        'bg-red-100 text-red-800': stockStore.currentStock.rating_from && ['underweight', 'underperform'].includes(stockStore.currentStock.rating_from.toLowerCase()),
+                        'bg-gray-100 text-gray-800': !stockStore.currentStock.rating_from
+                      }"
+                    >
+                      {{ stockStore.currentStock.rating_from || 'N/A' }}
+                    </span>
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Rating To</dt>
                   <dd class="mt-1">
                     <span 
                       class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full"
@@ -101,17 +116,13 @@ const goBack = () => {
                     </span>
                   </dd>
                 </div>
-                <div v-if="stockStore.currentStock.price">
-                  <dt class="text-sm font-medium text-gray-500">Current Price</dt>
-                  <dd class="mt-1 text-sm text-gray-900">${{ stockStore.currentStock.price }}</dd>
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Target From</dt>
+                  <dd class="mt-1 text-sm text-gray-900 font-semibold">{{ stockStore.currentStock.target_from || 'N/A' }}</dd>
                 </div>
-                <div v-if="stockStore.currentStock.target_price">
-                  <dt class="text-sm font-medium text-gray-500">Target Price</dt>
-                  <dd class="mt-1 text-sm text-gray-900">${{ stockStore.currentStock.target_price }}</dd>
-                </div>
-                <div v-if="stockStore.currentStock.date">
-                  <dt class="text-sm font-medium text-gray-500">Date</dt>
-                  <dd class="mt-1 text-sm text-gray-900">{{ stockStore.currentStock.date }}</dd>
+                <div>
+                  <dt class="text-sm font-medium text-gray-500">Target To</dt>
+                  <dd class="mt-1 text-sm text-gray-900 font-semibold">{{ stockStore.currentStock.target_to || 'N/A' }}</dd>
                 </div>
               </dl>
             </div>
