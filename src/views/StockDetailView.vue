@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useStockStore } from '@/stores';
 
 const route = useRoute();
-const router = useRouter();
 const stockStore = useStockStore();
 
 const stockId = computed(() => route.params.id as string);
@@ -14,10 +13,6 @@ onMounted(() => {
     stockStore.fetchStockById(stockId.value);
   }
 });
-
-const goBack = () => {
-  router.push({ name: 'stock-list' });
-};
 
 // Format timestamp to readable date
 const formatDate = (dateString: string | undefined) => {
@@ -40,13 +35,13 @@ const formatDate = (dateString: string | undefined) => {
 const getRatingClass = (rating: string | undefined) => {
   if (!rating) return 'bg-gray-100 text-gray-800';
   const lowerRating = rating.toLowerCase();
-  if (['overweight', 'buy', 'outperform', 'strong-buy', 'market outperform'].includes(lowerRating)) {
+  if (['overweight', 'buy', 'speculative buy', 'outperform', 'strong-buy', 'market outperform', 'sector outperform', 'positive'].includes(lowerRating)) {
     return 'bg-green-100 text-green-800';
   }
-  if (['hold', 'neutral', 'in-line', 'market perform', 'equal weight'].includes(lowerRating)) {
+  if (['hold', 'neutral', 'in-line', 'market perform', 'sector perform', 'equal weight'].includes(lowerRating)) {
     return 'bg-blue-100 text-blue-800';
   }
-  if (['underweight', 'underperform'].includes(lowerRating)) {
+  if (['underweight', 'underperform', 'reduce', 'sell'].includes(lowerRating)) {
     return 'bg-red-100 text-red-800';
   }
   return 'bg-gray-100 text-gray-800';
@@ -60,16 +55,22 @@ const isRatingUpgrade = computed(() => {
   const ratingValues: { [key: string]: number } = {
     'strong-buy': 5,
     'buy': 4,
+    'speculative buy': 4,
     'overweight': 4,
     'outperform': 4,
     'market outperform': 4,
+    'sector outperform': 4,
+    'positive': 4,
     'hold': 3,
     'neutral': 3,
     'in-line': 3,
     'market perform': 3,
+    'sector perform': 3,
     'equal weight': 3,
     'underweight': 2,
     'underperform': 2,
+    'reduce': 2,
+    'sell': 1,
   };
   
   const fromValue = ratingValues[stock.rating_from.toLowerCase()] || 3;
@@ -85,16 +86,22 @@ const isRatingDowngrade = computed(() => {
   const ratingValues: { [key: string]: number } = {
     'strong-buy': 5,
     'buy': 4,
+    'speculative buy': 4,
     'overweight': 4,
     'outperform': 4,
     'market outperform': 4,
+    'sector outperform': 4,
+    'positive': 4,
     'hold': 3,
     'neutral': 3,
     'in-line': 3,
     'market perform': 3,
+    'sector perform': 3,
     'equal weight': 3,
     'underweight': 2,
     'underperform': 2,
+    'reduce': 2,
+    'sell': 1,
   };
   
   const fromValue = ratingValues[stock.rating_from.toLowerCase()] || 3;
@@ -108,13 +115,13 @@ const isRatingDowngrade = computed(() => {
   <div class="min-h-screen bg-gray-100">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Back Button -->
-      <button
-        @click="goBack"
+      <router-link
+        :to="{ name: 'stock-list' }"
         class="mb-6 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800"
       >
         <i class="pi pi-arrow-left mr-2"></i>
         Back to Stock List
-      </button>
+      </router-link>
 
       <!-- Loading State -->
       <div v-if="stockStore.loading" class="bg-white rounded-lg shadow p-8 text-center">

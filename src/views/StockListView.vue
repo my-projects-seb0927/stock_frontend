@@ -126,9 +126,9 @@ const handlePageSizeChange = async (size: number) => {
                   <span 
                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                     :class="{
-                      'bg-green-100 text-green-800': stock.rating_to && ['overweight', 'buy', 'outperform', 'strong-buy', 'market outperform'].includes(stock.rating_to.toLowerCase()),
-                      'bg-blue-100 text-blue-800': stock.rating_to && ['hold', 'neutral', 'in-line', 'market perform', 'equal weight'].includes(stock.rating_to.toLowerCase()),
-                      'bg-red-100 text-red-800': stock.rating_to && ['underweight', 'underperform'].includes(stock.rating_to.toLowerCase()),
+                      'bg-green-100 text-green-800': stock.rating_to && ['overweight', 'buy', 'speculative buy', 'outperform', 'strong-buy', 'market outperform', 'sector outperform', 'positive'].includes(stock.rating_to.toLowerCase()),
+                      'bg-blue-100 text-blue-800': stock.rating_to && ['hold', 'neutral', 'in-line', 'market perform', 'sector perform', 'equal weight'].includes(stock.rating_to.toLowerCase()),
+                      'bg-red-100 text-red-800': stock.rating_to && ['underweight', 'underperform', 'reduce', 'sell'].includes(stock.rating_to.toLowerCase()),
                       'bg-gray-100 text-gray-800': !stock.rating_to
                     }"
                   >

@@ -92,18 +92,29 @@ const hasActiveFilters = () => {
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
           <option value="">All Ratings</option>
-          <option value="Overweight">Overweight</option>
+          <!-- Level 5: Most Positive -->
+          <option value="Strong-Buy">Strong-Buy</option>
+          <!-- Level 4: Positive -->
           <option value="Buy">Buy</option>
+          <option value="Speculative Buy">Speculative Buy</option>
+          <option value="Overweight">Overweight</option>
           <option value="Outperform">Outperform</option>
+          <option value="Market Outperform">Market Outperform</option>
+          <option value="Sector Outperform">Sector Outperform</option>
+          <option value="Positive">Positive</option>
+          <!-- Level 3: Neutral -->
           <option value="Hold">Hold</option>
           <option value="Neutral">Neutral</option>
           <option value="In-Line">In-Line</option>
+          <option value="Market Perform">Market Perform</option>
+          <option value="Sector Perform">Sector Perform</option>
+          <option value="Equal Weight">Equal Weight</option>
+          <!-- Level 2: Negative -->
           <option value="Underweight">Underweight</option>
           <option value="Underperform">Underperform</option>
-          <option value="Market Outperform">Market Outperform</option>
-          <option value="Market Perform">Market Perform</option>
-          <option value="Strong-Buy">Strong-Buy</option>
-          <option value="Equal Weight">Equal Weight</option>
+          <option value="Reduce">Reduce</option>
+          <!-- Level 1: Most Negative -->
+          <option value="Sell">Sell</option>
         </select>
       </div>
     </div>
