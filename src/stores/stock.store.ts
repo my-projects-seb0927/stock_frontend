@@ -27,7 +27,8 @@ export const useStockStore = defineStore('stocks', () => {
     company: undefined,
     brokerage: undefined,
     action: undefined,
-    rating: undefined,
+    rating_from: undefined,
+    rating_to: undefined,
     limit: 50,
     offset: 0,
   });
@@ -117,7 +118,8 @@ export const useStockStore = defineStore('stocks', () => {
       company: undefined,
       brokerage: undefined,
       action: undefined,
-      rating: undefined,
+      rating_from: undefined,
+      rating_to: undefined,
       limit: 50,
       offset: 0,
     };
@@ -201,7 +203,8 @@ export const useStockStore = defineStore('stocks', () => {
       company: undefined,
       brokerage: undefined,
       action: undefined,
-      rating: undefined,
+      rating_from: undefined,
+      rating_to: undefined,
       limit: 50,
       offset: 0,
     };

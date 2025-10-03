@@ -22,7 +22,7 @@ const clearFilters = () => {
     ticker: undefined,
     company: undefined,
     brokerage: undefined,
-    rating: undefined,
+    rating_to: undefined,
   };
   emit('clear');
 };
@@ -32,7 +32,7 @@ const hasActiveFilters = () => {
     localFilters.value.ticker ||
     localFilters.value.company ||
     localFilters.value.brokerage ||
-    localFilters.value.rating
+    localFilters.value.rating_to
   );
 };
 </script>
@@ -88,7 +88,7 @@ const hasActiveFilters = () => {
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
         <select
-          v-model="localFilters.rating"
+          v-model="localFilters.rating_to"
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
           <option value="">All Ratings</option>

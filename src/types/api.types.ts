@@ -30,7 +30,10 @@ export interface StockQueryParams {
   company?: string;
   brokerage?: string;
   action?: string;
-  rating?: string;
+  rating_from?: string;
+  rating_to?: string;
+  sortBy?: string; // ticker, company, time, rating_to, action
+  sortOrder?: 'asc' | 'desc';
   limit?: number;
   offset?: number;
 }
