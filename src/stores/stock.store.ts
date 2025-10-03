@@ -29,6 +29,8 @@ export const useStockStore = defineStore('stocks', () => {
     action: undefined,
     rating_from: undefined,
     rating_to: undefined,
+    sortBy: undefined,
+    sortOrder: undefined,
     limit: 50,
     offset: 0,
   });
@@ -120,6 +122,8 @@ export const useStockStore = defineStore('stocks', () => {
       action: undefined,
       rating_from: undefined,
       rating_to: undefined,
+      sortBy: undefined,
+      sortOrder: undefined,
       limit: 50,
       offset: 0,
     };
@@ -167,19 +171,13 @@ export const useStockStore = defineStore('stocks', () => {
   };
 
   /**
-   * Sort stocks client-side
+   * Set sorting parameters and fetch stocks from API
    */
-  const sortStocks = (field: 'ticker' | 'company' | 'brokerage', direction: 'asc' | 'desc') => {
-    stocks.value.sort((a, b) => {
-      const aVal = (a[field] || '').toString().toLowerCase();
-      const bVal = (b[field] || '').toString().toLowerCase();
-      
-      if (direction === 'asc') {
-        return aVal.localeCompare(bVal);
-      } else {
-        return bVal.localeCompare(aVal);
-      }
-    });
+  const setSorting = async (sortBy: string, sortOrder: 'asc' | 'desc') => {
+    filters.value.sortBy = sortBy;
+    filters.value.sortOrder = sortOrder;
+    filters.value.offset = 0; // Reset to first page when sorting changes
+    await fetchStocks();
   };
 
   /**
@@ -205,6 +203,8 @@ export const useStockStore = defineStore('stocks', () => {
       action: undefined,
       rating_from: undefined,
       rating_to: undefined,
+      sortBy: undefined,
+      sortOrder: undefined,
       limit: 50,
       offset: 0,
     };
@@ -236,7 +236,7 @@ export const useStockStore = defineStore('stocks', () => {
     previousPage,
     goToPage,
     setPageSize,
-    sortStocks,
+    setSorting,
     refresh,
     reset,
   };

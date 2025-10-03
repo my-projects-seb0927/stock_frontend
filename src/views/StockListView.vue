@@ -23,7 +23,7 @@ const handleFilterClear = async () => {
   await stockStore.fetchStocks();
 };
 
-const handleSort = (field: 'ticker' | 'company' | 'brokerage') => {
+const handleSort = async (field: 'ticker' | 'company' | 'brokerage') => {
   if (sortField.value === field) {
     sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
   } else {
@@ -31,7 +31,8 @@ const handleSort = (field: 'ticker' | 'company' | 'brokerage') => {
     sortDirection.value = 'asc';
   }
   
-  stockStore.sortStocks(field, sortDirection.value);
+  // Use server-side sorting via API
+  await stockStore.setSorting(field, sortDirection.value);
 };
 
 const getSortIcon = (field: string) => {
