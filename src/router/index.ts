@@ -4,6 +4,7 @@ import type { RouteRecordRaw } from 'vue-router';
 // Views
 import StockListView from '@/views/StockListView.vue';
 import StockDetailView from '@/views/StockDetailView.vue';
+import RecommendationsView from '@/views/RecommendationsView.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -17,6 +18,14 @@ const routes: RouteRecordRaw[] = [
     component: StockListView,
     meta: {
       title: 'Stock List',
+    },
+  },
+  {
+    path: '/recommendations',
+    name: 'recommendations',
+    component: RecommendationsView,
+    meta: {
+      title: 'Stock Recommendations',
     },
   },
   {

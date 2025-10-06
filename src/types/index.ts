@@ -11,7 +11,7 @@ export type {
 
 export type {
   Stock,
-  StockAction,
   StockFilters,
   StockSort,
+  Recommendation,
 } from './stock.types';

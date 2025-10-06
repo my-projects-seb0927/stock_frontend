@@ -52,7 +52,19 @@ const handlePageSizeChange = async (size: number) => {
 <template>
   <div class="min-h-screen bg-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">Stock Analysis Dashboard</h1>
+      <!-- Header with Recommendations Link -->
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Stock Analysis Dashboard</h1>
+        
+        <router-link
+          :to="{ name: 'recommendations' }"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-lg hover:from-yellow-600 hover:to-orange-600 shadow-lg hover:shadow-xl transition-all"
+        >
+          <i class="pi pi-star-fill"></i>
+          View Top Recommendations
+          <i class="pi pi-arrow-right"></i>
+        </router-link>
+      </div>
 
       <!-- Filter Panel -->
       <FilterPanel

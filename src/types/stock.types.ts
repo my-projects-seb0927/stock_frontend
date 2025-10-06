@@ -28,3 +28,13 @@ export interface StockSort {
   field: keyof Stock;
   order: 'asc' | 'desc';
 }
+
+/**
+ * Stock Recommendation from scoring algorithm
+ */
+export interface Recommendation {
+  stock: Stock;
+  score: number;
+  reason: string;
+  target_increase_percent: number;
+}

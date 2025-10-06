@@ -4,6 +4,7 @@ import type {
   StockQueryParams,
   ApiResponse,
   PaginatedResponse,
+  Recommendation,
 } from '@/types';
 
 /**
@@ -41,6 +42,18 @@ export class StockService {
    */
   static async getStockHistory(ticker: string): Promise<ApiResponse<Stock[]>> {
     const response = await apiClient.get<ApiResponse<Stock[]>>(`/stock/${ticker}`);
+    return response.data;
+  }
+
+  /**
+   * Get stock recommendations based on AI algorithm
+   * GET /api/v1/recommendations
+   * @param limit - Number of recommendations to return (default: 10)
+   */
+  static async getRecommendations(limit: number = 10): Promise<ApiResponse<Recommendation[]>> {
+    const response = await apiClient.get<ApiResponse<Recommendation[]>>('/recommendations', {
+      params: { limit },
+    });
     return response.data;
   }
 
