@@ -35,6 +35,16 @@ export class StockService {
   }
 
   /**
+   * Get all historical records for a specific ticker
+   * GET /api/v1/stock/:ticker
+   * @param ticker - Stock ticker symbol (e.g., AAPL, GOOGL)
+   */
+  static async getStockHistory(ticker: string): Promise<ApiResponse<Stock[]>> {
+    const response = await apiClient.get<ApiResponse<Stock[]>>(`/stock/${ticker}`);
+    return response.data;
+  }
+
+  /**
    * Health check endpoint
    * GET /health (note: this is at root level, not under /api/v1)
    */

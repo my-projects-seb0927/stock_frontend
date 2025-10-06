@@ -11,6 +11,7 @@ export const useStockStore = defineStore('stocks', () => {
   // State
   const stocks = ref<Stock[]>([]);
   const currentStock = ref<Stock | null>(null);
+  const stockHistory = ref<Stock[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
   
@@ -94,6 +95,27 @@ export const useStockStore = defineStore('stocks', () => {
       error.value = err.message || `Failed to fetch stock #${id}`;
       console.error('❌ Error fetching stock:', err);
       currentStock.value = null;
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  /**
+   * Fetch all historical records for a specific ticker
+   */
+  const fetchStockHistory = async (ticker: string) => {
+    try {
+      loading.value = true;
+      error.value = null;
+
+      const response = await StockService.getStockHistory(ticker);
+      stockHistory.value = response.data || [];
+
+      console.log('✅ Stock history fetched:', stockHistory.value.length, 'records for', ticker);
+    } catch (err: any) {
+      error.value = err.message || `Failed to fetch history for ${ticker}`;
+      console.error('❌ Error fetching stock history:', err);
+      stockHistory.value = [];
     } finally {
       loading.value = false;
     }
@@ -214,6 +236,7 @@ export const useStockStore = defineStore('stocks', () => {
     // State
     stocks,
     currentStock,
+    stockHistory,
     loading,
     error,
     meta,
@@ -230,6 +253,7 @@ export const useStockStore = defineStore('stocks', () => {
     // Actions
     fetchStocks,
     fetchStockById,
+    fetchStockHistory,
     setFilters,
     clearFilters,
     nextPage,

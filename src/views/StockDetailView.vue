@@ -8,9 +8,14 @@ const stockStore = useStockStore();
 
 const stockId = computed(() => route.params.id as string);
 
-onMounted(() => {
+onMounted(async () => {
   if (stockId.value) {
-    stockStore.fetchStockById(stockId.value);
+    await stockStore.fetchStockById(stockId.value);
+    
+    // Once we have the stock, fetch its history by ticker
+    if (stockStore.currentStock?.ticker) {
+      await stockStore.fetchStockHistory(stockStore.currentStock.ticker);
+    }
   }
 });
 
@@ -268,6 +273,69 @@ const isRatingDowngrade = computed(() => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Historical Records Table -->
+        <div v-if="stockStore.stockHistory.length > 0" class="bg-white rounded-lg shadow overflow-hidden">
+          <div class="px-8 py-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <i class="pi pi-history text-blue-600"></i>
+                Historical Records
+              </h2>
+              <span class="text-sm text-gray-500">
+                {{ stockStore.stockHistory.length }} total records
+              </span>
+            </div>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Analysis Date</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating Change</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target Price</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Brokerage</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr v-for="record in stockStore.stockHistory" :key="record.id" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">{{ formatDate(record.time) }}</div>
+                    <div class="text-xs text-gray-500">Created: {{ formatDate(record.created_at) }}</div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div v-if="record.action" class="text-sm text-gray-900 first-letter:uppercase">{{ record.action }}</div>
+                    <div v-else class="text-sm text-gray-400 italic">N/A</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center gap-2">
+                      <span :class="['px-2 py-1 inline-flex text-xs font-semibold rounded', getRatingClass(record.rating_from)]">
+                        {{ record.rating_from || 'N/A' }}
+                      </span>
+                      <i class="pi pi-arrow-right text-gray-400 text-xs"></i>
+                      <span :class="['px-2 py-1 inline-flex text-xs font-semibold rounded', getRatingClass(record.rating_to)]">
+                        {{ record.rating_to || 'N/A' }}
+                      </span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center gap-2 text-sm">
+                      <span class="text-gray-600">{{ record.target_from || 'N/A' }}</span>
+                      <i class="pi pi-arrow-right text-gray-400 text-xs"></i>
+                      <span class="font-semibold text-gray-900">{{ record.target_to || 'N/A' }}</span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div v-if="record.brokerage" class="text-sm text-gray-900">{{ record.brokerage }}</div>
+                    <div v-else class="text-sm text-gray-400 italic">No brokerage</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
