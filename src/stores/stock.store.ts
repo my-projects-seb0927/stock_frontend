@@ -68,8 +68,6 @@ export const useStockStore = defineStore('stocks', () => {
         limit: response.meta.limit,
         offset: response.meta.offset,
       };
-
-      console.log('✅ Stocks fetched:', response.data.length, 'of', response.meta.total);
     } catch (err: any) {
       error.value = err.message || 'Failed to fetch stocks';
       console.error('❌ Error fetching stocks:', err);
@@ -90,10 +88,9 @@ export const useStockStore = defineStore('stocks', () => {
       const response = await StockService.getStockById(id);
       currentStock.value = response.data || null;
 
-      console.log('✅ Stock fetched:', response.data);
     } catch (err: any) {
       error.value = err.message || `Failed to fetch stock #${id}`;
-      console.error('❌ Error fetching stock:', err);
+      console.error('Error fetching stock:', err);
       currentStock.value = null;
     } finally {
       loading.value = false;
@@ -110,11 +107,9 @@ export const useStockStore = defineStore('stocks', () => {
 
       const response = await StockService.getStockHistory(ticker);
       stockHistory.value = response.data || [];
-
-      console.log('✅ Stock history fetched:', stockHistory.value.length, 'records for', ticker);
     } catch (err: any) {
       error.value = err.message || `Failed to fetch history for ${ticker}`;
-      console.error('❌ Error fetching stock history:', err);
+      console.error('Error fetching stock history:', err);
       stockHistory.value = [];
     } finally {
       loading.value = false;

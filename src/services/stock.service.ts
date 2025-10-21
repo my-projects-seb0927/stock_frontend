@@ -5,6 +5,9 @@ import type {
   ApiResponse,
   PaginatedResponse,
   Recommendation,
+  Rating,
+  Action,
+  Brokerage,
 } from '@/types';
 
 /**
@@ -54,6 +57,33 @@ export class StockService {
     const response = await apiClient.get<ApiResponse<Recommendation[]>>('/recommendations', {
       params: { limit },
     });
+    return response.data;
+  }
+
+  /**
+   * Get all ratings
+   * GET /api/v1/ratings
+   */
+  static async getRatings(): Promise<ApiResponse<Rating[]>> {
+    const response = await apiClient.get<ApiResponse<Rating[]>>('/ratings');
+    return response.data;
+  }
+
+  /**
+   * Get all actions
+   * GET /api/v1/actions
+   */
+  static async getActions(): Promise<ApiResponse<Action[]>> {
+    const response = await apiClient.get<ApiResponse<Action[]>>('/actions');
+    return response.data;
+  }
+
+  /**
+   * Get all brokerages
+   * GET /api/v1/brokerages
+   */
+  static async getBrokerages(): Promise<ApiResponse<Brokerage[]>> {
+    const response = await apiClient.get<ApiResponse<Brokerage[]>>('/brokerages');
     return response.data;
   }
 

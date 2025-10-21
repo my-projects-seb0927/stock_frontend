@@ -14,4 +14,7 @@ export type {
   StockFilters,
   StockSort,
   Recommendation,
+  Rating,
+  Action,
+  Brokerage,
 } from './stock.types';

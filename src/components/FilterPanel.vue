@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { StockQueryParams } from '@/types';
+import { ref, onMounted } from 'vue';
+import { StockService } from '@/services';
+import type { StockQueryParams, Rating } from '@/types';
 
 const props = defineProps<{
   filters: StockQueryParams;
@@ -12,6 +13,25 @@ const emit = defineEmits<{
 }>();
 
 const localFilters = ref<StockQueryParams>({ ...props.filters });
+const ratings = ref<Rating[]>([]);
+const loadingRatings = ref(false);
+
+onMounted(async () => {
+  await fetchRatings();
+});
+
+const fetchRatings = async () => {
+  try {
+    loadingRatings.value = true;
+    const response = await StockService.getRatings();
+    ratings.value = response.data || [];
+  } catch (err: any) {
+    console.error('Error fetching ratings:', err);
+    ratings.value = [];
+  } finally {
+    loadingRatings.value = false;
+  }
+};
 
 const applyFilters = () => {
   emit('apply', { ...localFilters.value });
@@ -89,32 +109,13 @@ const hasActiveFilters = () => {
         <label class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
         <select
           v-model="localFilters.rating_to"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          :disabled="loadingRatings"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <option value="">All Ratings</option>
-          <!-- Level 5: Most Positive -->
-          <option value="Strong-Buy">Strong-Buy</option>
-          <!-- Level 4: Positive -->
-          <option value="Buy">Buy</option>
-          <option value="Speculative Buy">Speculative Buy</option>
-          <option value="Overweight">Overweight</option>
-          <option value="Outperform">Outperform</option>
-          <option value="Market Outperform">Market Outperform</option>
-          <option value="Sector Outperform">Sector Outperform</option>
-          <option value="Positive">Positive</option>
-          <!-- Level 3: Neutral -->
-          <option value="Hold">Hold</option>
-          <option value="Neutral">Neutral</option>
-          <option value="In-Line">In-Line</option>
-          <option value="Market Perform">Market Perform</option>
-          <option value="Sector Perform">Sector Perform</option>
-          <option value="Equal Weight">Equal Weight</option>
-          <!-- Level 2: Negative -->
-          <option value="Underweight">Underweight</option>
-          <option value="Underperform">Underperform</option>
-          <option value="Reduce">Reduce</option>
-          <!-- Level 1: Most Negative -->
-          <option value="Sell">Sell</option>
+          <option value="">{{ loadingRatings ? 'Loading ratings...' : 'All Ratings' }}</option>
+          <option v-for="rating in ratings" :key="rating.id" :value="rating.term">
+            {{ rating.term }}
+          </option>
         </select>
       </div>
     </div>

@@ -18,8 +18,6 @@ const fetchRecommendations = async () => {
     
     const response = await StockService.getRecommendations(10);
     recommendations.value = response.data || [];
-    
-    console.log('✅ Recommendations fetched:', recommendations.value.length);
   } catch (err: any) {
     error.value = err.message || 'Failed to fetch recommendations';
     console.error('❌ Error fetching recommendations:', err);

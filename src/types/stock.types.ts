@@ -38,3 +38,33 @@ export interface Recommendation {
   reason: string;
   target_increase_percent: number;
 }
+
+/**
+ * Rating entity from backend
+ */
+export interface Rating {
+  id: string;
+  term: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Action entity from backend
+ */
+export interface Action {
+  id: string;
+  term: string;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Brokerage entity from backend
+ */
+export interface Brokerage {
+  id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+}
