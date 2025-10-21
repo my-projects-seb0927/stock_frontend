@@ -1,5 +1,8 @@
 # 📈 Stock Analysis Dashboard
 
+> [!NOTE]  
+> This project was made for a technical test
+
 A modern, responsive web application for analyzing stock market data, ratings, and recommendations. Built with Vue 3, TypeScript, and Tailwind CSS.
 
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.5-4FC08D?style=flat&logo=vue.js&logoColor=white)
@@ -9,21 +12,21 @@ A modern, responsive web application for analyzing stock market data, ratings, a
 
 ## ✨ Features
 
-### 📊 Stock List Dashboard
+### Stock List Dashboard
 - **Advanced Filtering**: Filter stocks by ticker, company, brokerage, and rating
 - **Server-Side Sorting**: Sort by ticker, company, or brokerage with real-time API updates
 - **Smart Pagination**: Navigate through large datasets with customizable page sizes (10/25/50/100 items)
 - **Color-Coded Ratings**: Visual indicators for positive (green), neutral (blue), and negative (red) ratings
 - **Responsive Table**: Mobile-friendly design with horizontal scrolling
 
-### 🔍 Stock Detail View
+### Stock Detail View
 - **Comprehensive Information**: View detailed stock analysis including rating changes and price targets
 - **Visual Indicators**: Upgrade/downgrade arrows and status messages
 - **Historical Records**: Complete history table showing all records for a specific ticker
 - **Timeline View**: Analysis time and creation timestamps for each record
 - **Brokerage Information**: Track which firms are providing recommendations
 
-### ⭐ Stock Recommendations
+### Stock Recommendations
 - **Data-Driven Scoring**: Algorithm-based recommendations (0-10 score)
 - **Top Picks**: View the best investment opportunities ranked by score
 - **Medal System**: Visual ranking with 🥇🥈🥉 for top 3 stocks
@@ -31,7 +34,7 @@ A modern, responsive web application for analyzing stock market data, ratings, a
 - **Upside Potential**: See percentage increase potential based on target prices
 - **Quick Navigation**: Direct links to full stock details
 
-### 🎨 UI/UX Features
+### UI/UX Features
 - **PrimeIcons Integration**: Consistent icon library throughout the application
 - **Tailwind CSS**: Modern, utility-first styling with custom design system
 - **Loading States**: Smooth user experience with animated spinners
